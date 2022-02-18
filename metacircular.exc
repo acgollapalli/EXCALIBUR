@@ -1,0 +1,39 @@
+(defns excalibur.definition)
+
+(defn identity
+  "returns the what's fed into it"
+  [arg]
+  arg)
+
+(defn quoted-symbol?
+  [arg]
+  "if arg is a quoted symbol, returns arg, else nil"
+  (when (= (class arg) excalibur.quoted-symbol)
+    arg))
+
+(defn data-literal?
+  "numbers, quoted symbols, etc. are data literals"
+  [arg]
+  (when (isa? arg excalibur.data-literal)
+    arg))
+
+(defn arg-list
+  "returns argument list of f, the empty-list if 0 args, or nil
+   if arg is a data literal"
+  [f]
+  (when-not (data-literal? f)
+    (:arg-list (var f))))
+
+;; map returns the type of coll it was called upon
+(defn eval
+  [f & args]
+  (if (arg-list f)      ;; (arg-list f) => nil implies f is a data literal
+    (eval               ;; yes this eval after apply is intentional
+      (apply f          ;; whether it makes sense is a different question
+           (map (fn [arg-def arg]
+                  (if (quoted-symbol? arg-def)
+                    arg
+                    (eval arg)))
+                (arg-list f)
+                args)))
+    (cons f (map eval args))))
