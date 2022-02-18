@@ -1,0 +1,35 @@
+#+TITLE: EXCALIBUR
+
+* Introduction
+Excalibur is the language of KING, your sword which empwers you to rule your KINGdom! (and naturally, it's a LISP)
+
+* Exemplus Introductus
+#+BEGIN_SRC excalibur
+(def a ('+ 1 (inc 1) 3)) ;; => a
+
+a ;; => (+ 1 2 3)
+
+(def b map) ;; => b
+
+(= λ lambda fn) ;; => true
+
+((λ ['x y]
+  (conj (,(first x) (rest x)) 'y)) a b) ;; => (map + (1 2 3))
+
+((λ '[x y]
+  (conj (,(first x) (rest x)) y)) a b) ;; => (map + (1 2 3))
+
+((λ ['x y]
+  (conj (,(first x) (rest x)) y)) a b) ;; => 6
+
+((λ [x y]
+  (conj (,(first x) (rest x)) y)) a b) ;; => ERROR: 6 is not a seq
+#+END_SRC
+Generally we have a few fairly important points here regarding excalibur as a lisp.
+For starters:
+** It's a lisp-1.
+** It's a clojure-like
+We have brackets to represent vectors as data literals as well as curly-brackets {} for hash-maps and #{} for hash-sets.
+** There is no distinction between Macros, Functions and Special-Forms
+Lambda's (anonymous functions) have control over evaluation. By default arguments are evaluated with applicative-order evaluation, as in other lisps, however, when an argument is quoted, that argument is not evaluated, as in a special form, and when the entire binding form (the vector with the arguments) is quoted, then none of the arguments are evaluated, as in a macro. This is a pragmatic choice, but if I were a formalist, I'd wager it probably lends excalibur some nice properties.
+** TODO evaluation + commas and quotes
