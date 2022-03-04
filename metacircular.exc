@@ -1,14 +1,14 @@
 (defns excalibur.definition)
 
 (defn identity
-  "returns the what's fed into it"
+  "returns what's fed into it"
   [arg]
   arg)
 
 (defn quoted-symbol?
   [arg]
   "if arg is a quoted symbol, returns arg, else nil"
-  (when (= (class arg) excalibur.quoted-symbol)
+  (when (= (type arg) excalibur/quoted-symbol)
     arg))
 
 (defn data-literal?

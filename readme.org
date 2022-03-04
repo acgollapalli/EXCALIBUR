@@ -3,7 +3,7 @@
 * Introduction
 Excalibur is the language of KING, your sword which empwers you to rule your KINGdom! (and naturally, it's a LISP)
 
-* Exemplus Introductus
+* Exempla Introductoria
 #+BEGIN_SRC excalibur
 (def a ('+ 1 (inc 1) 3)) ;; => a
 
